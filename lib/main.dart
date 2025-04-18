@@ -1,3 +1,4 @@
+import 'package:f3_docs/core/constants/routes.dart';
 import 'package:f3_docs/core/utils/toggle_theme.dart';
 import 'package:f3_docs/features/landing/screens/landing_page.dart';
 import 'package:flutter/material.dart';
@@ -20,41 +21,34 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, _) {
-        return MaterialApp(
+        return ShadApp(
           debugShowCheckedModeBanner: false,
-          themeMode: themeProvider.themeMode,
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: Colors.white,
-            fontFamily: 'Inter',
-          ),
-          darkTheme: ThemeData(
+          darkTheme: ShadThemeData(
             brightness: Brightness.dark,
-            primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: const Color(0xFF121212),
-            fontFamily: 'Inter',
+            colorScheme: const ShadSlateColorScheme.dark(),
           ),
           home: Builder(
             builder: (context) {
-              return ShadApp(
+              return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                darkTheme: ShadThemeData(
+                themeMode: themeProvider.themeMode,
+                theme: ThemeData(
+                  brightness: Brightness.light,
+                  primarySwatch: Colors.blue,
+                  scaffoldBackgroundColor: Colors.white,
+                  fontFamily: 'Inter',
+                ),
+                darkTheme: ThemeData(
                   brightness: Brightness.dark,
-                  colorScheme: const ShadSlateColorScheme.dark(),
+                  primarySwatch: Colors.blue,
+                  scaffoldBackgroundColor: const Color(0xFF121212),
+                  fontFamily: 'Inter',
                 ),
                 home: const LandingPage(),
+                routes: AppRoutes.routes,
               );
             },
           ),
-          routes: {
-            '/docs/introduction': (context) => const Placeholder(),
-            '/docs/installation': (context) => const Placeholder(),
-            '/docs/flutter': (context) => const Placeholder(),
-            '/docs/firebase': (context) => const Placeholder(),
-            '/docs/freezed': (context) => const Placeholder(),
-            '/docs/faq': (context) => const Placeholder(),
-          },
         );
       },
     );

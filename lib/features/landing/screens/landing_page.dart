@@ -1,8 +1,11 @@
+import 'package:f3_docs/core/constants/routes.dart';
 import 'package:f3_docs/features/landing/widgets/block.dart';
 import 'package:f3_docs/features/landing/widgets/content.dart';
+import 'package:f3_docs/features/landing/widgets/feature_card.dart';
 import 'package:f3_docs/features/landing/widgets/footer.dart';
+import 'package:f3_docs/features/landing/widgets/grids.dart';
 import 'package:f3_docs/features/landing/widgets/header.dart';
-import 'package:f3_docs/features/landing/widgets/stack_card.dart';
+import 'package:f3_docs/features/landing/widgets/social_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -17,7 +20,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   bool copied = false;
 
-  void copyCommand() {
+  void copy() {
     Clipboard.setData(
       const ClipboardData(
         text: "go install github.com/yourusername/f3-stack@latest",
@@ -54,10 +57,7 @@ class _LandingPageState extends State<LandingPage> {
           ),
 
           Positioned.fill(
-            child: Opacity(
-              opacity: 0.02,
-              child: CustomPaint(painter: GridPainter()),
-            ),
+            child: Opacity(opacity: 0.02, child: CustomPaint(painter: Grid())),
           ),
 
           CustomScrollView(
@@ -166,7 +166,6 @@ class _LandingPageState extends State<LandingPage> {
                               ),
                             ),
                             const SizedBox(height: 24),
-
                             SizedBox(
                               width: isWideScreen ? 700 : null,
                               child: Text(
@@ -176,13 +175,17 @@ class _LandingPageState extends State<LandingPage> {
                               ),
                             ),
                             const SizedBox(height: 48),
-
                             Wrap(
                               spacing: 16,
                               runSpacing: 16,
                               alignment: WrapAlignment.center,
                               children: [
                                 ShadButton(
+                                  onPressed:
+                                      () => Navigator.pushNamed(
+                                        context,
+                                        AppRoutes.docs,
+                                      ),
                                   gradient: const LinearGradient(
                                     colors: [Colors.cyan, Colors.indigo],
                                   ),
@@ -237,7 +240,7 @@ class _LandingPageState extends State<LandingPage> {
                                                     ? Colors.green
                                                     : Colors.grey.shade400,
                                           ),
-                                          onPressed: copyCommand,
+                                          onPressed: copy,
                                         ),
                                       ],
                                     ),
@@ -283,169 +286,53 @@ class _LandingPageState extends State<LandingPage> {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
-                        vertical: 80,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: Colors.grey.shade800),
-                        ),
+                        vertical: 40,
                       ),
                       child: Center(
                         child: SizedBox(
                           width: 1100,
                           child: Column(
                             children: [
-                              const Text(
+                              Text(
                                 'The F3 Stack',
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                                style: ShadTheme.of(context).textTheme.h1Large,
                               ),
                               const SizedBox(height: 48),
-                              LayoutBuilder(
-                                builder: (context, constraints) {
-                                  return constraints.maxWidth >= 768
-                                      ? Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: _buildStackCards(),
-                                      )
-                                      : Column(children: _buildStackCards());
-                                },
-                              ),
+                              const FeatureCards(),
                             ],
                           ),
                         ),
                       ),
                     ),
-
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 80,
                       ),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: Colors.grey.shade800),
-                        ),
-                      ),
                       child: Center(
                         child: SizedBox(
                           width: 800,
                           child: Column(
                             children: [
-                              const Text(
-                                'Get Started in Minutes',
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                              Text(
+                                'Community',
+                                style: ShadTheme.of(context).textTheme.h1Large,
                               ),
                               const SizedBox(height: 24),
                               Text(
-                                'Create a new F3 Stack project with a single command and start building your application right away.',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.grey.shade400,
-                                ),
+                                'Join our community to get help, share your projects, and even contribute to the project!',
+                                style: ShadTheme.of(context).textTheme.large,
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 48),
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade800.withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: 12,
-                                            height: 12,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.red,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Container(
-                                            width: 12,
-                                            height: 12,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.amber,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 8),
-                                          Container(
-                                            width: 12,
-                                            height: 12,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.green,
-                                              shape: BoxShape.circle,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-
-                                      child: Text(
-                                        '# Install the F3 CLI\ngo install github.com/yourusername/f3-stack@latest\n\n# Create a new project\nf3-stack create\n\n# Follow the prompts to configure your project\n# Connect to Firebase\nflutterfire configure',
-                                        style: TextStyle(
-                                          fontFamily: 'monospace',
-                                          fontSize: 14,
-                                          color: Colors.grey.shade300,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blue.shade600,
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: const [
-                                    Text('View Installation Guide'),
-                                    SizedBox(width: 8),
-                                    Icon(Icons.arrow_forward, size: 16),
-                                  ],
-                                ),
-                              ),
+                              SocialCard(),
                             ],
                           ),
                         ),
                       ),
                     ),
-
-                    const SiteFooter(),
+                    const Footer(),
                   ],
                 ),
               ),
@@ -455,75 +342,4 @@ class _LandingPageState extends State<LandingPage> {
       ),
     );
   }
-
-  List<Widget> _buildStackCards() {
-    final cards = [
-      StackCard(
-        title: 'Flutter',
-        description:
-            "Google's UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.",
-        gradientColors: [Colors.blue.shade500, Colors.cyan.shade500],
-        route: '/docs/flutter',
-      ),
-      StackCard(
-        title: 'Firebase',
-        description:
-            "Google's platform for building mobile and web applications, with pre-configured authentication to get you started quickly.",
-        gradientColors: [Colors.orange.shade500, Colors.amber.shade500],
-        route: '/docs/firebase',
-      ),
-      StackCard(
-        title: 'Freezed',
-        description:
-            "Code generation for immutable classes with unions/pattern-matching/copy for Dart, ensuring type safety.",
-        gradientColors: [Colors.purple.shade500, Colors.pink.shade500],
-        route: '/docs/freezed',
-      ),
-    ];
-
-    if (MediaQuery.of(context).size.width >= 768) {
-      return cards
-          .map(
-            (card) => Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: card,
-              ),
-            ),
-          )
-          .toList();
-    } else {
-      return cards
-          .map(
-            (card) => Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: card,
-            ),
-          )
-          .toList();
-    }
-  }
-}
-
-class GridPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint =
-        Paint()
-          ..color = Colors.white
-          ..strokeWidth = 1;
-
-    const double gridSize = 50;
-
-    for (double i = 0; i <= size.width; i += gridSize) {
-      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
-    }
-
-    for (double i = 0; i <= size.height; i += gridSize) {
-      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

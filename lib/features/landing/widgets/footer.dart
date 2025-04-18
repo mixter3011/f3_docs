@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SiteFooter extends StatelessWidget {
-  const SiteFooter({super.key});
+class Footer extends StatelessWidget {
+  const Footer({super.key});
 
   void _launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -16,9 +16,6 @@ class SiteFooter extends StatelessWidget {
     final isWideScreen = MediaQuery.of(context).size.width >= 768;
 
     return Container(
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade800)),
-      ),
       padding: EdgeInsets.symmetric(
         vertical: isWideScreen ? 0 : 24,
         horizontal: 16,
@@ -28,23 +25,22 @@ class SiteFooter extends StatelessWidget {
           isWideScreen
               ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_buildCopyrightText(), _buildLinks()],
+                children: [_buildtext(), _buildlinks()],
               )
               : Column(
                 children: [
-                  _buildCopyrightText(),
+                  _buildtext(),
                   const SizedBox(height: 16),
-                  _buildLinks(),
+                  _buildlinks(),
                 ],
               ),
     );
   }
 
-  Widget _buildCopyrightText() {
+  Widget _buildtext() {
     return Text.rich(
       TextSpan(
-        text:
-            'Built with ❤️ by the F3 Stack team. The source code is available on ',
+        text: 'Built with Flutter. The source code is available on ',
         style: TextStyle(color: Colors.grey.shade400, fontSize: 14),
         children: [
           TextSpan(
@@ -58,9 +54,8 @@ class SiteFooter extends StatelessWidget {
             recognizer:
                 TapGestureRecognizer()
                   ..onTap =
-                      () => _launchURL(
-                        'https://github.com/yourusername/f3-stack',
-                      ),
+                      () =>
+                          _launchURL('https://github.com/mixter3011/f3-stack'),
           ),
           const TextSpan(text: '.'),
         ],
@@ -68,7 +63,7 @@ class SiteFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildLinks() {
+  Widget _buildlinks() {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -86,7 +81,7 @@ class SiteFooter extends StatelessWidget {
         ),
         const SizedBox(width: 16),
         InkWell(
-          onTap: () => _launchURL('https://github.com/yourusername/f3-stack'),
+          onTap: () => _launchURL('https://github.com/mixter3011'),
           child: Text(
             'GitHub',
             style: TextStyle(

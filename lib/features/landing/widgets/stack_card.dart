@@ -1,10 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
-class StackCard extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+
+class StackCard extends StatefulWidget {
   final String title;
   final String description;
   final List<Color> gradientColors;
   final String route;
+  final String backgroundImage;
 
   const StackCard({
     super.key,
@@ -12,82 +16,115 @@ class StackCard extends StatelessWidget {
     required this.description,
     required this.gradientColors,
     required this.route,
+    required this.backgroundImage,
   });
+
+  @override
+  State<StackCard> createState() => _StackCardState();
+}
+
+class _StackCardState extends State<StackCard> {
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onEnter: (_) => {},
-      onExit: (_) => {},
-      child: Container(
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.grey.shade800.withOpacity(0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade700),
+          image: DecorationImage(
+            image: AssetImage(widget.backgroundImage),
+            fit: BoxFit.cover,
+            opacity: 0.8,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: widget.gradientColors[0].withOpacity(
+                isHovered ? 0.6 : 0.2,
+              ),
+              blurRadius: isHovered ? 15 : 8,
+              spreadRadius: isHovered ? 3 : 0,
+            ),
+          ],
         ),
-        padding: const EdgeInsets.all(24),
-        constraints: BoxConstraints(minHeight: 250),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 48,
-              height: 48,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            child: Container(
               decoration: BoxDecoration(
+                color: Colors.grey.shade800.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: gradientColors,
+                border: Border.all(
+                  color:
+                      isHovered
+                          ? widget.gradientColors[0]
+                          : Colors.grey.shade700,
+                  width: isHovered ? 2 : 1,
                 ),
+                boxShadow:
+                    isHovered
+                        ? [
+                          BoxShadow(
+                            color: widget.gradientColors[0].withOpacity(0.3),
+                            blurRadius: 8,
+                            spreadRadius: 0,
+                            blurStyle: BlurStyle.inner,
+                          ),
+                        ]
+                        : [],
               ),
-              alignment: Alignment.center,
-              child: Text(
-                title[0],
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Flexible(
-              fit: FlexFit.loose,
-              child: Text(
-                description,
-                style: TextStyle(fontSize: 16, color: Colors.grey.shade400),
-              ),
-            ),
-            const SizedBox(height: 24),
-            InkWell(
-              onTap: () => Navigator.pushNamed(context, route),
-              child: Row(
+              padding: const EdgeInsets.all(24),
+              constraints: const BoxConstraints(minHeight: 250),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Learn more',
-                    style: TextStyle(color: Colors.blue.shade400, fontSize: 16),
+                    widget.title,
+                    style: ShadTheme.of(context).textTheme.h2.copyWith(
+                      color:
+                          isHovered ? widget.gradientColors[0] : Colors.white,
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                  Icon(
-                    Icons.arrow_forward,
-                    size: 16,
-                    color: Colors.blue.shade400,
+                  const SizedBox(height: 12),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Text(
+                      widget.description,
+                      style: ShadTheme.of(context).textTheme.lead,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  InkWell(
+                    onTap: () => Navigator.pushNamed(context, widget.route),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Learn more',
+                          style: TextStyle(
+                            color: widget.gradientColors[0],
+                            fontSize: 16,
+                            fontWeight:
+                                isHovered ? FontWeight.bold : FontWeight.normal,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          Icons.arrow_forward,
+                          size: 16,
+                          color: widget.gradientColors[0],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
