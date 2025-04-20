@@ -11,7 +11,7 @@ class AppRoutes {
   static const String faq = '/docs/faq';
 
   static Map<String, Widget Function(BuildContext)> get routes => {
-    docs: (context) => const Docs(),
+    docs: (context) => const DocsPage(),
     introduction: (context) => const Placeholder(),
     installation: (context) => const Placeholder(),
     flutter: (context) => const Placeholder(),

@@ -1,4 +1,3 @@
-import 'package:f3_docs/core/constants/routes.dart';
 import 'package:f3_docs/features/landing/widgets/block.dart';
 import 'package:f3_docs/features/landing/widgets/content.dart';
 import 'package:f3_docs/features/landing/widgets/feature_card.dart';
@@ -8,6 +7,7 @@ import 'package:f3_docs/features/landing/widgets/header.dart';
 import 'package:f3_docs/features/landing/widgets/social_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class LandingPage extends StatefulWidget {
@@ -181,11 +181,7 @@ class _LandingPageState extends State<LandingPage> {
                               alignment: WrapAlignment.center,
                               children: [
                                 ShadButton(
-                                  onPressed:
-                                      () => Navigator.pushNamed(
-                                        context,
-                                        AppRoutes.docs,
-                                      ),
+                                  onPressed: () => context.go('/docs'),
                                   gradient: const LinearGradient(
                                     colors: [Colors.cyan, Colors.indigo],
                                   ),
