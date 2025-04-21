@@ -16,7 +16,7 @@ class DocCodeBlock extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       width: double.infinity,
-      child: SelectableText(code, style: ShadTheme.of(context).textTheme.small),
+      child: SelectableText(code, style: ShadTheme.of(context).textTheme.muted),
     );
   }
 }
