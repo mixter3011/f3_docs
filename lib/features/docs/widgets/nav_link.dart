@@ -29,26 +29,12 @@ class _NavLinkState extends State<NavLink> {
           margin: const EdgeInsets.only(bottom: 2),
           decoration: BoxDecoration(
             color:
-                widget.isActive
-                    ? Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white.withOpacity(0.1)
-                        : Colors.grey.withOpacity(0.1)
-                    : isHovering
+                isHovering
                     ? Theme.of(context).brightness == Brightness.dark
                         ? Colors.white.withOpacity(0.05)
                         : Colors.grey.withOpacity(0.05)
                     : Colors.transparent,
             borderRadius: BorderRadius.circular(4),
-            border:
-                widget.isActive
-                    ? Border.all(
-                      color:
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white.withOpacity(0.2)
-                              : Colors.grey.withOpacity(0.2),
-                      width: 1,
-                    )
-                    : null,
           ),
           child: Text(
             widget.title,

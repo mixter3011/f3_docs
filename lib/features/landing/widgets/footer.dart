@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Footer extends StatelessWidget {
@@ -25,13 +26,13 @@ class Footer extends StatelessWidget {
           isWideScreen
               ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [_buildtext(), _buildlinks()],
+                children: [_buildtext(), _buildlinks(context)],
               )
               : Column(
                 children: [
                   _buildtext(),
                   const SizedBox(height: 16),
-                  _buildlinks(),
+                  _buildlinks(context),
                 ],
               ),
     );
@@ -40,7 +41,7 @@ class Footer extends StatelessWidget {
   Widget _buildtext() {
     return Text.rich(
       TextSpan(
-        text: 'Built with Flutter. The source code is available on ',
+        text: 'Built with Go & Flutter. The source code is available on ',
         style: TextStyle(color: Colors.grey.shade400, fontSize: 14),
         children: [
           TextSpan(
@@ -54,8 +55,9 @@ class Footer extends StatelessWidget {
             recognizer:
                 TapGestureRecognizer()
                   ..onTap =
-                      () =>
-                          _launchURL('https://github.com/mixter3011/f3-stack'),
+                      () => _launchURL(
+                        'https://github.com/mixter3011/f3-stack.git',
+                      ),
           ),
           const TextSpan(text: '.'),
         ],
@@ -63,27 +65,14 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildlinks() {
+  Widget _buildlinks(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
-          onTap: () {},
+          onTap: () => context.go('/docs'),
           child: Text(
             'Documentation',
-            style: TextStyle(
-              color: Colors.grey.shade400,
-              fontSize: 14,
-              decoration: TextDecoration.underline,
-              decorationThickness: 1.5,
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-        InkWell(
-          onTap: () => _launchURL('https://github.com/mixter3011'),
-          child: Text(
-            'GitHub',
             style: TextStyle(
               color: Colors.grey.shade400,
               fontSize: 14,

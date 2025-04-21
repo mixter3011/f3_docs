@@ -29,8 +29,7 @@ class FeatureCards extends StatelessWidget {
             "Google's UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.",
         gradientColors: [Colors.blue.shade500, Colors.cyan.shade500],
         route: '/docs/flutter',
-        backgroundImage:
-            '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/flutter.png',
+        backgroundImage: 'assets/images/flutter.png',
       ),
       StackCard(
         title: 'Firebase',
@@ -38,8 +37,7 @@ class FeatureCards extends StatelessWidget {
             "Google's platform for building mobile and web applications, with pre-configured authentication to get you started quickly.",
         gradientColors: [Colors.orange.shade500, Colors.amber.shade500],
         route: '/docs/firebase',
-        backgroundImage:
-            '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/firebase.png',
+        backgroundImage: 'assets/images/firebase.png',
       ),
       StackCard(
         title: 'Freezed',
@@ -47,8 +45,7 @@ class FeatureCards extends StatelessWidget {
             "Code generation for immutable classes with unions/pattern-matching/copy for Dart, ensuring type safety throughout your application.",
         gradientColors: [Colors.cyan.shade500, Colors.blue.shade500],
         route: '/docs/freezed',
-        backgroundImage:
-            '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/dart.png',
+        backgroundImage: 'assets/images/dart.png',
       ),
     ];
     if (MediaQuery.of(context).size.width >= 768) {

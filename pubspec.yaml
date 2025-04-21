@@ -38,6 +38,10 @@ dependencies:
   url_launcher: ^6.3.1
   provider: ^6.1.4
   go_router: ^15.0.0
+  back_button_interceptor: ^8.0.4
+  animations: ^2.0.11
+  flutter_bloc: ^9.1.0
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_test:

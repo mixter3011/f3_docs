@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 
 class F3RouteObserver extends NavigatorObserver {
   final List<VoidCallback> _listeners = [];
+  String _currentPath = '';
+
+  String get currentPath => _currentPath;
 
   void addListener(VoidCallback listener) {
-    _listeners.add(listener);
+    if (!_listeners.contains(listener)) {
+      _listeners.add(listener);
+    }
   }
 
   void removeListener(VoidCallback listener) {
@@ -12,6 +17,10 @@ class F3RouteObserver extends NavigatorObserver {
   }
 
   void _notifyListeners() {
+    if (navigator != null && navigator!.widget.initialRoute != null) {
+      _currentPath = navigator!.widget.initialRoute!;
+    }
+
     for (final listener in _listeners) {
       listener();
     }

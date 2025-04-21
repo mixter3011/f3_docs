@@ -1,55 +1,17 @@
 import 'package:f3_docs/features/docs/widgets/nav_link.dart';
-import 'package:f3_docs/main.dart';
+import 'package:f3_docs/core/navigation/route_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class DocsSidebar extends StatefulWidget {
+class DocsSidebar extends StatelessWidget {
   const DocsSidebar({super.key});
 
   @override
-  State<DocsSidebar> createState() => _DocsSidebarState();
-}
-
-class _DocsSidebarState extends State<DocsSidebar> {
-  String currentPath = '';
-
-  @override
-  void initState() {
-    super.initState();
-    routeObserver.addListener(_updatePath);
-  }
-
-  @override
-  void dispose() {
-    routeObserver.removeListener(_updatePath);
-    super.dispose();
-  }
-
-  void _updatePath() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        final router = GoRouter.of(context).routerDelegate.currentConfiguration;
-        final location = router.fullPath;
-        setState(() {
-          currentPath = location;
-        });
-      }
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final router = GoRouter.of(context).routerDelegate.currentConfiguration;
-    final location = router.fullPath;
-    setState(() {
-      currentPath = location;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final routeNotifier = Provider.of<RouteNotifier>(context);
+    final currentPath = routeNotifier.currentPath;
+
     return Container(
       width: 250,
       height: double.infinity,
@@ -89,7 +51,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Introduction',
-                      '/docs',
+                      '/docs/intro',
                       isActive: currentPath == '/docs',
                     ),
                   ),
@@ -97,8 +59,16 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Installation',
-                      '/installation',
+                      '/docs/installation',
                       isActive: currentPath == '/installation',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: NavLink(
+                      'Architecture',
+                      '/docs/architecture',
+                      isActive: currentPath == '/architecture',
                     ),
                   ),
                 ]),
@@ -111,7 +81,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Flutter',
-                      '/flutter',
+                      '/docs/flutter',
                       isActive: currentPath == '/flutter',
                     ),
                   ),
@@ -119,7 +89,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Firebase',
-                      '/firebase',
+                      '/docs/firebase',
                       isActive: currentPath == '/firebase',
                     ),
                   ),
@@ -127,7 +97,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Freezed',
-                      '/freezed',
+                      '/docs/freezed',
                       isActive: currentPath == '/freezed',
                     ),
                   ),
@@ -141,7 +111,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Overview',
-                      '/overview',
+                      '/docs/overview',
                       isActive: currentPath == '/overview',
                     ),
                   ),
@@ -155,7 +125,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Dependency Overrides',
-                      '/dependency',
+                      '/docs/dependency',
                       isActive: currentPath == '/dependency',
                     ),
                   ),
@@ -163,7 +133,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Testing',
-                      '/testing',
+                      '/docs/testing',
                       isActive: currentPath == '/testing',
                     ),
                   ),
@@ -171,7 +141,7 @@ class _DocsSidebarState extends State<DocsSidebar> {
                     padding: const EdgeInsets.only(left: 12),
                     child: NavLink(
                       'Deployment',
-                      '/deploy',
+                      '/docs/deploy',
                       isActive: currentPath == '/deploy',
                     ),
                   ),

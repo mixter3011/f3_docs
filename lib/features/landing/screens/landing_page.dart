@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -19,6 +20,18 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   bool copied = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void _launch(String urlString) async {
+    final url = Uri.parse(urlString);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    }
+  }
 
   void copy() {
     Clipboard.setData(
@@ -196,8 +209,12 @@ class _LandingPageState extends State<LandingPage> {
                                   child: Text('Documentation'),
                                 ),
                                 ShadButton.outline(
+                                  onPressed:
+                                      () => _launch(
+                                        'https://github.com/mixter3011/f3-stack.git',
+                                      ),
                                   leading: Image.asset(
-                                    '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/github-icon.png',
+                                    'assets/images/github-icon.png',
                                   ),
                                   child: Text('GithHub'),
                                 ),

@@ -29,16 +29,14 @@ class SocialCard extends StatelessWidget {
             "Contribute to the project by submitting issues, and pull requests on our GitHub repository.",
         gradientColors: [Colors.grey.shade500, Colors.black],
         route: '',
-        backgroundImage:
-            '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/github-icon.png',
+        backgroundImage: 'assets/images/github-icon.png',
       ),
       StackCard(
         title: 'Twitter',
         description: "Join us on Twitter for shitposts.",
         gradientColors: [Colors.grey.shade500, Colors.black],
         route: '',
-        backgroundImage:
-            '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/x.jpg',
+        backgroundImage: 'assets/images/x.jpg',
       ),
     ];
     if (MediaQuery.of(context).size.width >= 768) {

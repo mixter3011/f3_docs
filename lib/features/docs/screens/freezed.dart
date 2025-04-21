@@ -90,6 +90,62 @@ class AuthState with _\$AuthState {
 }
 '''),
 
+        const DocSubheading('Pattern Matching'),
+        const DocParagraph(
+          'Freezed provides pattern matching capabilities that allow you to handle different states in a type-safe way:',
+        ),
+
+        const DocCodeBlock('''
+// Example of pattern matching with Freezed in F3 Stack
+Widget build(BuildContext context) {
+  return BlocBuilder<AuthBloc, AuthState>(
+    builder: (context, state) {
+      return state.map(
+        initial: (_) => const SplashScreen(),
+        loading: (_) => const LoadingScreen(),
+        authenticated: (state) => HomeScreen(user: state.user),
+        unauthenticated: (_) => const LoginScreen(),
+        error: (state) => ErrorScreen(message: state.message),
+      );
+    },
+  );
+}
+'''),
+
+        const DocSubheading('Copy With'),
+        const DocParagraph(
+          'Freezed generates a copyWith method that allows you to create copies of objects with modified properties:',
+        ),
+
+        const DocCodeBlock('''
+// Example of copyWith with Freezed in F3 Stack
+final user = User(
+  id: '123',
+  name: 'John Doe',
+  email: 'john@example.com',
+);
+
+// Create a copy with a different name
+final updatedUser = user.copyWith(name: 'Jane Doe');
+
+// updatedUser is a new object with id: '123', name: 'Jane Doe', email: 'john@example.com'
+'''),
+
+        const DocHeading('Dependency Overrides'),
+        const DocParagraph(
+          'F3 Stack uses a dependency override for the analyzer package to ensure compatibility with json_serializable and freezed:',
+        ),
+
+        const DocCodeBlock('''
+// Example of dependency override in pubspec.yaml
+dependency_overrides:
+  analyzer: '6.2.0'
+'''),
+
+        const DocParagraph(
+          'This ensures that the code generation works correctly and avoids compatibility issues between different packages.',
+        ),
+
         const DocHeading('Best Practices'),
         const DocParagraph(
           'When working with Freezed in F3 Stack, follow these best practices:',

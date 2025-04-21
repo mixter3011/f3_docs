@@ -43,10 +43,7 @@ class _SiteHeaderState extends State<SiteHeader> {
                   children: [
                     InkWell(
                       onTap: () => Navigator.pushNamed(context, '/'),
-                      child: Image.asset(
-                        '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/logo.png',
-                        scale: 15,
-                      ),
+                      child: Image.asset('assets/images/logo.png', scale: 15),
                     ),
                     const SizedBox(width: 10),
                     MediaQuery.of(context).size.width > 768
@@ -89,11 +86,6 @@ class _SiteHeaderState extends State<SiteHeader> {
                           ),
                           child: Row(
                             children: [
-                              Text(
-                                '1.2k',
-                                style: ShadTheme.of(context).textTheme.lead,
-                              ),
-                              const SizedBox(width: 6),
                               const Icon(Icons.star_border_rounded, size: 22),
                             ],
                           ),
@@ -151,11 +143,6 @@ class _SiteHeaderState extends State<SiteHeader> {
                           child: Row(
                             children: [
                               const Icon(Icons.star_outline, size: 16),
-                              const SizedBox(width: 4),
-                              Text(
-                                '1.2k',
-                                style: ShadTheme.of(context).textTheme.lead,
-                              ),
                             ],
                           ),
                         ),

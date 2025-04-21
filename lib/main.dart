@@ -1,4 +1,5 @@
 import 'package:f3_docs/core/utils/toggle_theme.dart';
+import 'package:f3_docs/features/docs/screens/architecture.dart';
 import 'package:f3_docs/features/docs/screens/dependency.dart';
 import 'package:f3_docs/features/docs/screens/deployment.dart';
 import 'package:f3_docs/features/docs/screens/firebase.dart';
@@ -15,80 +16,102 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/foundation.dart';
+import 'package:f3_docs/core/navigation/browser_history_manager.dart';
+import 'package:f3_docs/core/navigation/route_notifier.dart';
 
 final F3RouteObserver routeObserver = F3RouteObserver();
 
 void main() {
+  final routeNotifier = RouteNotifier();
+
+  final router = GoRouter(
+    initialLocation: '/',
+    debugLogDiagnostics: true,
+    observers: [routeObserver],
+    redirect: (context, state) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        routeNotifier.updatePath(state.fullPath ?? '/');
+      });
+      return null;
+    },
+    routes: [
+      GoRoute(path: '/', builder: (context, state) => const LandingPage()),
+      ShellRoute(
+        builder: (context, state, child) {
+          return DocsLayout(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/docs/intro',
+            builder: (context, state) => const IntroductionPage(),
+          ),
+          GoRoute(
+            path: '/docs/installation',
+            builder: (context, state) => const InstallationPage(),
+          ),
+          GoRoute(
+            path: '/docs/architecture',
+            builder: (context, state) => const ArchitecturePage(),
+          ),
+          GoRoute(
+            path: '/docs/flutter',
+            builder: (context, state) => const FlutterPage(),
+          ),
+          GoRoute(
+            path: '/docs/firebase',
+            builder: (context, state) => const FirebasePage(),
+          ),
+          GoRoute(
+            path: '/docs/freezed',
+            builder: (context, state) => const FreezedPage(),
+          ),
+          GoRoute(
+            path: '/docs/overview',
+            builder: (context, state) => const OverviewPage(),
+          ),
+          GoRoute(
+            path: '/docs/dependency',
+            builder: (context, state) => const DependencyPage(),
+          ),
+          GoRoute(
+            path: '/docs/testing',
+            builder: (context, state) => const TestingPage(),
+          ),
+          GoRoute(
+            path: '/docs/deploy',
+            builder: (context, state) => const DeploymentPage(),
+          ),
+          GoRoute(path: '/docs', redirect: (_, __) => '/docs/intro'),
+        ],
+      ),
+    ],
+  );
+
+  if (kIsWeb) {
+    BrowserHistoryManager(router);
+  }
+
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeProvider(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider.value(value: routeNotifier),
+      ],
+      child: MyApp(router: router),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GoRouter router;
+
+  const MyApp({super.key, required this.router});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, _) {
-        final router = GoRouter(
-          initialLocation: '/',
-          debugLogDiagnostics: true,
-          observers: [routeObserver],
-          routes: [
-            GoRoute(
-              path: '/',
-              builder: (context, state) => const LandingPage(),
-            ),
-            ShellRoute(
-              builder: (context, state, child) {
-                return DocsLayout(child: child);
-              },
-              routes: [
-                GoRoute(
-                  path: '/docs',
-                  builder: (context, state) => const IntroductionPage(),
-                ),
-                GoRoute(
-                  path: '/installation',
-                  builder: (context, state) => const InstallationPage(),
-                ),
-                GoRoute(
-                  path: '/flutter',
-                  builder: (context, state) => const FlutterPage(),
-                ),
-                GoRoute(
-                  path: '/firebase',
-                  builder: (context, state) => const FirebasePage(),
-                ),
-                GoRoute(
-                  path: '/freezed',
-                  builder: (context, state) => const FreezedPage(),
-                ),
-                GoRoute(
-                  path: '/overview',
-                  builder: (context, state) => const OverviewPage(),
-                ),
-                GoRoute(
-                  path: '/dependency',
-                  builder: (context, state) => const DependencyPage(),
-                ),
-                GoRoute(
-                  path: '/testing',
-                  builder: (context, state) => const TestingPage(),
-                ),
-                GoRoute(
-                  path: '/deploy',
-                  builder: (context, state) => const DeploymentPage(),
-                ),
-              ],
-            ),
-          ],
-        );
-
         return ShadApp(
           debugShowCheckedModeBanner: false,
           darkTheme: ShadThemeData(

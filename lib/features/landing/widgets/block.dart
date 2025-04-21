@@ -48,9 +48,7 @@ class CodeBlock extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text('f3-stack create', style: ShadTheme.of(context).textTheme.p),
-          Image.asset(
-            '/Users/sen/Desktop/vscode/flutter/projects/f3_docs/assets/images/ascii-art.png',
-          ),
+          Image.asset('assets/images/ascii-art.png'),
           const SizedBox(height: 10),
           Row(
             children: [
