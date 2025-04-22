@@ -91,10 +91,6 @@ class _SiteHeaderState extends State<SiteHeader> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.brightness_4, size: 18),
-                        onPressed: () {},
-                      ),
                     ],
                     if (MediaQuery.of(context).size.width <= 768)
                       IconButton(
@@ -140,16 +136,8 @@ class _SiteHeaderState extends State<SiteHeader> {
                             horizontal: 12,
                             vertical: 8,
                           ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.star_outline, size: 16),
-                            ],
-                          ),
+                          child: const Icon(Icons.star_outline, size: 16),
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.brightness_4),
-                        onPressed: () {},
                       ),
                     ],
                   ),

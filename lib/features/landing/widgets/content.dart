@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class Content extends StatelessWidget {
@@ -25,7 +26,9 @@ class Content extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).go('/docs/freezed');
+          },
           child: Row(
             children: [
               Text(
@@ -51,7 +54,9 @@ class Content extends StatelessWidget {
         ),
         const SizedBox(height: 24),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).go('/docs/firebase');
+          },
           child: Row(
             children: [
               Text(

@@ -35,10 +35,10 @@ class DocsSidebar extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  child: Image.asset('assets/images/logo.png', scale: 20),
+                  child: Image.asset('assets/images/logo.png', scale: 15),
                 ),
-                const SizedBox(width: 8),
-                Text('F3 Stack', style: ShadTheme.of(context).textTheme.h3),
+                const SizedBox(width: 2),
+                Text('Stack', style: ShadTheme.of(context).textTheme.h3),
               ],
             ),
           ),
