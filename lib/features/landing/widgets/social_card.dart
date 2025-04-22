@@ -27,15 +27,15 @@ class SocialCard extends StatelessWidget {
         title: 'GitHub',
         description:
             "Contribute to the project by submitting issues, and pull requests on our GitHub repository.",
-        gradientColors: [Colors.grey.shade500, Colors.black],
-        route: '',
+        gradientColors: [Colors.grey.shade100, Colors.black],
+        url: 'https://github.com/mixter3011/f3_docs.git',
         backgroundImage: 'assets/images/github-icon.png',
       ),
       StackCard(
         title: 'Twitter',
         description: "Join us on Twitter for shitposts.",
-        gradientColors: [Colors.grey.shade500, Colors.black],
-        route: '',
+        gradientColors: [Colors.grey.shade300, Colors.black],
+        url: 'https://x.com/f3stack',
         backgroundImage: 'assets/images/x.jpg',
       ),
     ];

@@ -16,6 +16,7 @@ class DocsLayout extends StatefulWidget {
 
 class _DocsLayoutState extends State<DocsLayout> {
   late PageTransitionBloc _pageTransitionBloc;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _DocsLayoutState extends State<DocsLayout> {
 
   @override
   void dispose() {
+    _scrollController.dispose();
     _pageTransitionBloc.close();
     super.dispose();
   }
@@ -47,64 +49,77 @@ class _DocsLayoutState extends State<DocsLayout> {
           children: [
             const DocsSidebar(),
             Expanded(
-              child: ClipRect(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.only(
-                    left: 40,
-                    right: 40,
-                    top: 20,
-                    bottom: 40,
-                  ),
-                  physics: const ClampingScrollPhysics(),
-                  child: Center(
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 1000),
-                      width: double.infinity,
-                      child: BlocBuilder<
-                        PageTransitionBloc,
-                        PageTransitionState
-                      >(
-                        builder: (context, state) {
-                          if (state is PageDisplayed) {
-                            return AnimatedOpacity(
-                              duration: const Duration(milliseconds: 200),
-                              opacity: 1.0,
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                child: IntrinsicHeight(child: state.content),
-                              ),
-                            );
-                          } else if (state is PageTransitioning) {
-                            if (!state.isExiting &&
-                                state is TransitionLoading) {
-                              return Center(
-                                child: Container(
-                                  height: 400,
-                                  alignment: Alignment.center,
-                                  child: const CircularProgressIndicator(),
-                                ),
-                              );
-                            }
-                            return AnimatedOpacity(
-                              duration: const Duration(milliseconds: 200),
-                              opacity: state.isExiting ? 0.0 : 1.0,
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 16,
-                                ),
-                                child: IntrinsicHeight(child: state.content),
-                              ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
+              child: PrimaryScrollController(
+                controller: _scrollController,
+                child: Stack(
+                  children: [
+                    ClipRect(
+                      child: SingleChildScrollView(
+                        controller: _scrollController,
+                        padding: const EdgeInsets.only(
+                          left: 40,
+                          right: 300,
+                          top: 20,
+                          bottom: 40,
+                        ),
+                        physics: const ClampingScrollPhysics(),
+                        child: Center(
+                          child: Container(
+                            constraints: const BoxConstraints(maxWidth: 1000),
+                            width: double.infinity,
+                            child: BlocBuilder<
+                              PageTransitionBloc,
+                              PageTransitionState
+                            >(
+                              builder: (context, state) {
+                                if (state is PageDisplayed) {
+                                  return AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 200),
+                                    opacity: 1.0,
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                      ),
+                                      child: IntrinsicHeight(
+                                        child: state.content,
+                                      ),
+                                    ),
+                                  );
+                                } else if (state is PageTransitioning) {
+                                  if (!state.isExiting &&
+                                      state is TransitionLoading) {
+                                    return Center(
+                                      child: Container(
+                                        height: 400,
+                                        alignment: Alignment.center,
+                                        child:
+                                            const CircularProgressIndicator(),
+                                      ),
+                                    );
+                                  }
+                                  return AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 200),
+                                    opacity: state.isExiting ? 0.0 : 1.0,
+                                    child: Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                      ),
+                                      child: IntrinsicHeight(
+                                        child: state.content,
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class Footer extends StatelessWidget {
   const Footer({super.key});
 
-  void _launchURL(String url) async {
+  void _launch(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     }
@@ -55,9 +55,8 @@ class Footer extends StatelessWidget {
             recognizer:
                 TapGestureRecognizer()
                   ..onTap =
-                      () => _launchURL(
-                        'https://github.com/mixter3011/f3-stack.git',
-                      ),
+                      () =>
+                          _launch('https://github.com/mixter3011/f3_docs.git'),
           ),
           const TextSpan(text: '.'),
         ],

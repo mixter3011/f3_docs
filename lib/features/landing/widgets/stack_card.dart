@@ -1,13 +1,15 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StackCard extends StatefulWidget {
   final String title;
   final String description;
   final List<Color> gradientColors;
-  final String route;
+  final String? route;
+  final String? url;
   final String backgroundImage;
 
   const StackCard({
@@ -15,9 +17,13 @@ class StackCard extends StatefulWidget {
     required this.title,
     required this.description,
     required this.gradientColors,
-    required this.route,
+    this.route,
+    this.url,
     required this.backgroundImage,
-  });
+  }) : assert(
+         route != null || url != null,
+         'Either route or url must be provided',
+       );
 
   @override
   State<StackCard> createState() => _StackCardState();
@@ -25,6 +31,23 @@ class StackCard extends StatefulWidget {
 
 class _StackCardState extends State<StackCard> {
   bool isHovered = false;
+
+  Future<void> _launch() async {
+    if (widget.url != null) {
+      final Uri url = Uri.parse(widget.url!);
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      }
+    }
+  }
+
+  void _nav() {
+    if (widget.route != null) {
+      GoRouter.of(context).go(widget.route!);
+    } else if (widget.url != null) {
+      _launch();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,11 +123,11 @@ class _StackCardState extends State<StackCard> {
                   ),
                   const SizedBox(height: 24),
                   InkWell(
-                    onTap: () => Navigator.pushNamed(context, widget.route),
+                    onTap: _nav,
                     child: Row(
                       children: [
                         Text(
-                          'Learn more',
+                          widget.url != null ? 'Visit website' : 'Learn more',
                           style: TextStyle(
                             color: widget.gradientColors[0],
                             fontSize: 16,
@@ -114,7 +137,9 @@ class _StackCardState extends State<StackCard> {
                         ),
                         const SizedBox(width: 8),
                         Icon(
-                          Icons.arrow_forward,
+                          widget.url != null
+                              ? Icons.open_in_new
+                              : Icons.arrow_forward,
                           size: 16,
                           color: widget.gradientColors[0],
                         ),

@@ -39,11 +39,9 @@ class FirebasePage extends StatelessWidget {
         ),
 
         const DocSubheading('Pre-configured Firebase Services'),
-        const DocParagraph('F3 Stack comes with pre-configured:'),
-
-        const DocList([
-          'Firebase Authentication: For user authentication and management, including login, registration, and password reset functionality.',
-        ]),
+        const DocParagraph(
+          'F3 Stack comes with pre-configured user authentication and management, including login, registration, and password reset functionality.',
+        ),
 
         const DocParagraph(
           'You can easily add other Firebase services to your project as needed:',

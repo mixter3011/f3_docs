@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class Clipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(size.width - 15, 0);
+    path.lineTo(size.width, size.height / 2);
+    path.lineTo(size.width - 15, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 
 class SiteHeader extends StatefulWidget {
   final bool isHomePage;
@@ -17,6 +34,15 @@ class _SiteHeaderState extends State<SiteHeader> {
     setState(() {
       isMenuOpen = !isMenuOpen;
     });
+  }
+
+  Future<void> _launch() async {
+    const url = 'https://github.com/mixter3011/f3-stack.git';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -43,9 +69,9 @@ class _SiteHeaderState extends State<SiteHeader> {
                   children: [
                     InkWell(
                       onTap: () => Navigator.pushNamed(context, '/'),
-                      child: Image.asset('assets/images/logo.png', scale: 15),
+                      child: Image.asset('assets/images/logo.png', scale: 10),
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 14),
                     MediaQuery.of(context).size.width > 768
                         ? Row(
                           children:
@@ -77,19 +103,60 @@ class _SiteHeaderState extends State<SiteHeader> {
                 Row(
                   children: [
                     if (MediaQuery.of(context).size.width > 768) ...[
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 12,
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: _launch,
+                            child: ClipPath(
+                              clipper: Clipper(),
+                              child: Container(
+                                height: 36,
+                                padding: const EdgeInsets.only(
+                                  left: 8,
+                                  right: 20,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                ),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.star_border_rounded,
+                                      color: Colors.white,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      'Give a star over Github !',
+                                      style:
+                                          ShadTheme.of(context).textTheme.lead,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.star_border_rounded, size: 22),
-                            ],
+                          const SizedBox(width: 8),
+                          InkWell(
+                            onTap: _launch,
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF252A37),
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  'assets/images/github-icon.png',
+                                  width: 32,
+                                  height: 32,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                     if (MediaQuery.of(context).size.width <= 768)
@@ -130,13 +197,54 @@ class _SiteHeaderState extends State<SiteHeader> {
                   Row(
                     children: [
                       InkWell(
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
+                        onTap: _launch,
+                        child: ClipPath(
+                          clipper: Clipper(),
+                          child: Container(
+                            height: 36,
+                            padding: const EdgeInsets.only(left: 12, right: 24),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.1),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.star_border_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+                                const SizedBox(width: 6),
+                                const Text(
+                                  'Give a star over Github !',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          child: const Icon(Icons.star_outline, size: 16),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      InkWell(
+                        onTap: _launch,
+                        child: Container(
+                          height: 36,
+                          width: 36,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF252A37),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/images/github-icon.png',
+                              width: 32,
+                              height: 32,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ],

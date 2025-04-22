@@ -71,7 +71,7 @@ flutter build appbundle
 flutter build ios --release
 '''),
         const DocList(['Open the Xcode workspace:']),
-        const DocCodeBlock(''''
+        const DocCodeBlock('''
 open ios/Runner.xcworkspace
 '''),
         const DocList([
