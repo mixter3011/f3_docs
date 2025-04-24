@@ -17,6 +17,10 @@ class DocsLayout extends StatefulWidget {
 class _DocsLayoutState extends State<DocsLayout> {
   late PageTransitionBloc _pageTransitionBloc;
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool _isMobile(BuildContext context) =>
+      MediaQuery.of(context).size.width < 768;
 
   @override
   void initState() {
@@ -45,9 +49,23 @@ class _DocsLayoutState extends State<DocsLayout> {
     return BlocProvider.value(
       value: _pageTransitionBloc,
       child: Scaffold(
+        key: _scaffoldKey,
+        appBar:
+            _isMobile(context)
+                ? AppBar(
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+                )
+                : null,
+        drawer: _isMobile(context) ? const Drawer(child: DocsSidebar()) : null,
         body: Row(
           children: [
-            const DocsSidebar(),
+            if (!_isMobile(context)) const DocsSidebar(),
             Expanded(
               child: PrimaryScrollController(
                 controller: _scrollController,
@@ -56,12 +74,15 @@ class _DocsLayoutState extends State<DocsLayout> {
                     ClipRect(
                       child: SingleChildScrollView(
                         controller: _scrollController,
-                        padding: const EdgeInsets.only(
-                          left: 40,
-                          right: 300,
-                          top: 20,
-                          bottom: 40,
-                        ),
+                        padding:
+                            _isMobile(context)
+                                ? const EdgeInsets.all(16)
+                                : const EdgeInsets.only(
+                                  left: 40,
+                                  right: 300,
+                                  top: 20,
+                                  bottom: 40,
+                                ),
                         physics: const ClampingScrollPhysics(),
                         child: Center(
                           child: Container(

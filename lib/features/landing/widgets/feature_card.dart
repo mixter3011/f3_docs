@@ -8,11 +8,17 @@ class FeatureCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return constraints.maxWidth >= 768
+        final bool istab =
+            constraints.maxWidth >= 600 && constraints.maxWidth < 900;
+        final bool isdesktop = constraints.maxWidth >= 900;
+
+        return isdesktop
             ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: _build(context),
             )
+            : istab
+            ? Wrap(spacing: 16, runSpacing: 16, children: _build(context))
             : Column(children: _build(context));
       },
     );

@@ -6,11 +6,19 @@ import 'package:f3_docs/features/docs/widgets/paragraph.dart';
 import 'package:f3_docs/features/docs/widgets/title.dart';
 import 'package:flutter/material.dart';
 
-class TestingPage extends StatelessWidget {
+class TestingPage extends StatefulWidget {
   const TestingPage({super.key});
 
   @override
+  State<TestingPage> createState() => _TestingPageState();
+}
+
+class _TestingPageState extends State<TestingPage> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -299,29 +307,72 @@ flutter test integration_test/app_test.dart
           const DocParagraph(
             'Now that you understand testing in F3 Stack, you can explore:',
           ),
-          Row(
-            children: [
-              DocLink('Deployemnt', '/docs/deployment'),
-              const Text(' - Learn how to deploy your F3 Stack application'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              DocLink('Dependency Overrides', '/docs/dependency'),
-              const Text(
-                ' - Understand how dependency overrides affect testing',
+          isWideScreen
+              ? Column(
+                children: [
+                  Row(
+                    children: [
+                      DocLink('Deployemnt', '/docs/deployment'),
+                      const Text(
+                        ' - Learn how to deploy your F3 Stack application',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Dependency Overrides', '/docs/dependency'),
+                      const Text(
+                        ' - Understand how dependency overrides affect testing',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('CLI', '/docs/overview'),
+                      const Text(
+                        ' - Learn how the F3 CLI can help with testing setup',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                ],
+              )
+              : Column(
+                children: [
+                  Row(
+                    children: [
+                      DocLink('Deployemnt', '/docs/deployment'),
+                      const Text(
+                        ' - Learn how to deploy your F3 Stack application',
+                        style: TextStyle(fontSize: 11),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Dependency Overrides', '/docs/dependency'),
+                      const Text(
+                        ' - Understand how dependency overrides affect testing',
+                        style: TextStyle(fontSize: 8.5),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('CLI', '/docs/overview'),
+                      const Text(
+                        ' - Learn how the F3 CLI can help with testing setup',
+                        style: TextStyle(fontSize: 11),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              DocLink('CLI', '/docs/overview'),
-              const Text(' - Learn how the F3 CLI can help with testing setup'),
-            ],
-          ),
-          const SizedBox(height: 16),
         ],
       ),
     );

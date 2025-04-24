@@ -6,11 +6,19 @@ import 'package:f3_docs/features/docs/widgets/paragraph.dart';
 import 'package:f3_docs/features/docs/widgets/title.dart';
 import 'package:flutter/material.dart';
 
-class InstallationPage extends StatelessWidget {
+class InstallationPage extends StatefulWidget {
   const InstallationPage({super.key});
 
   @override
+  State<InstallationPage> createState() => _InstallationPageState();
+}
+
+class _InstallationPageState extends State<InstallationPage> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
+
     return Stack(
       children: [
         Column(
@@ -86,18 +94,32 @@ class InstallationPage extends StatelessWidget {
             ),
 
             const DocHeading('Next Steps'),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                children: [
-                  const DocParagraph('Check out the '),
-                  DocLink('Architecture', '/architecture'),
-                  const DocParagraph(
-                    ' guide to understand the structure of your project and how to build on it.',
+            isWideScreen
+                ? Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Row(
+                    children: [
+                      const DocParagraph('Check out the '),
+                      DocLink('Architecture', '/architecture'),
+                      const DocParagraph(
+                        ' guide to understand the structure of your project and how to build on it.',
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                )
+                : Row(
+                  children: [
+                    const Text(
+                      'Check out the ',
+                      style: TextStyle(fontSize: 11),
+                    ),
+                    DocLink('Architecture', '/architecture'),
+                    const Text(
+                      ' to understand the structure of your project',
+                      style: TextStyle(fontSize: 10.5),
+                    ),
+                  ],
+                ),
           ],
         ),
       ],

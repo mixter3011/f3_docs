@@ -60,6 +60,11 @@ class _LandingPageState extends State<LandingPage> {
       body: Stack(
         children: [
           Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: isWideScreen ? 768 : 48,
+            ),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -96,7 +101,13 @@ class _LandingPageState extends State<LandingPage> {
                                   Text(
                                     'The best way to start a',
                                     style:
-                                        ShadTheme.of(context).textTheme.h1Large,
+                                        isWideScreen
+                                            ? ShadTheme.of(
+                                              context,
+                                            ).textTheme.h1Large
+                                            : ShadTheme.of(
+                                              context,
+                                            ).textTheme.h1,
                                     textAlign: TextAlign.center,
                                   ),
                                   const SizedBox(height: 8),
@@ -114,17 +125,25 @@ class _LandingPageState extends State<LandingPage> {
                                         child: Text(
                                           'full-stack',
                                           style:
-                                              ShadTheme.of(
-                                                context,
-                                              ).textTheme.h1Large,
+                                              isWideScreen
+                                                  ? ShadTheme.of(
+                                                    context,
+                                                  ).textTheme.h1Large
+                                                  : ShadTheme.of(
+                                                    context,
+                                                  ).textTheme.h1,
                                         ),
                                       ),
                                       Text(
                                         ',',
                                         style:
-                                            ShadTheme.of(
-                                              context,
-                                            ).textTheme.h1Large,
+                                            isWideScreen
+                                                ? ShadTheme.of(
+                                                  context,
+                                                ).textTheme.h1Large
+                                                : ShadTheme.of(
+                                                  context,
+                                                ).textTheme.h1,
                                       ),
                                       const SizedBox(width: 8),
                                       ShaderMask(
@@ -138,9 +157,13 @@ class _LandingPageState extends State<LandingPage> {
                                         child: Text(
                                           'typesafe',
                                           style:
-                                              ShadTheme.of(
-                                                context,
-                                              ).textTheme.h1Large,
+                                              isWideScreen
+                                                  ? ShadTheme.of(
+                                                    context,
+                                                  ).textTheme.h1Large
+                                                  : ShadTheme.of(
+                                                    context,
+                                                  ).textTheme.h1,
                                         ),
                                       ),
                                     ],
@@ -160,18 +183,26 @@ class _LandingPageState extends State<LandingPage> {
                                         child: Text(
                                           'Flutter',
                                           style:
-                                              ShadTheme.of(
-                                                context,
-                                              ).textTheme.h1Large,
+                                              isWideScreen
+                                                  ? ShadTheme.of(
+                                                    context,
+                                                  ).textTheme.h1Large
+                                                  : ShadTheme.of(
+                                                    context,
+                                                  ).textTheme.h1,
                                         ),
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
                                         'app',
                                         style:
-                                            ShadTheme.of(
-                                              context,
-                                            ).textTheme.h1Large,
+                                            isWideScreen
+                                                ? ShadTheme.of(
+                                                  context,
+                                                ).textTheme.h1Large
+                                                : ShadTheme.of(
+                                                  context,
+                                                ).textTheme.h1,
                                       ),
                                     ],
                                   ),
@@ -222,43 +253,52 @@ class _LandingPageState extends State<LandingPage> {
                             ),
                             const SizedBox(height: 48),
                             Container(
-                              width: isWideScreen ? 600 : double.infinity,
+                              width: isWideScreen ? 600 : 380,
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade800.withOpacity(0.4),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: Colors.grey.shade700),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 10,
-                                      left: 24,
-                                      bottom: 10,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'go  install  github.com/mixter3011/f3-stack@latest',
-                                          style:
-                                              ShadTheme.of(context).textTheme.p,
-                                        ),
-                                        const SizedBox(width: 140),
-                                        IconButton(
-                                          icon: Icon(
-                                            copied ? Icons.check : Icons.copy,
-                                            color:
-                                                copied
-                                                    ? Colors.green
-                                                    : Colors.grey.shade400,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 10,
+                                        left: 24,
+                                        bottom: 10,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'go  install  github.com/mixter3011/f3-stack@latest',
+                                            style:
+                                                isWideScreen
+                                                    ? ShadTheme.of(
+                                                      context,
+                                                    ).textTheme.p
+                                                    : TextStyle(fontSize: 12),
                                           ),
-                                          onPressed: copy,
-                                        ),
-                                      ],
+                                          SizedBox(
+                                            width: isWideScreen ? 140 : 10,
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              copied ? Icons.check : Icons.copy,
+                                              size: 18,
+                                              color:
+                                                  copied
+                                                      ? Colors.green
+                                                      : Colors.grey.shade400,
+                                            ),
+                                            onPressed: copy,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],

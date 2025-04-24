@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-class CodeBlock extends StatelessWidget {
+class CodeBlock extends StatefulWidget {
   const CodeBlock({super.key});
 
   @override
+  State<CodeBlock> createState() => _CodeBlockState();
+}
+
+class _CodeBlockState extends State<CodeBlock> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey.shade800.withOpacity(0.4),
@@ -197,7 +205,10 @@ class CodeBlock extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '✓ Successfully added boilerplate codes for auth!',
-                style: TextStyle(color: Colors.green.shade400),
+                style: TextStyle(
+                  color: Colors.green.shade400,
+                  fontSize: isWideScreen ? null : 11,
+                ),
               ),
             ],
           ),
@@ -208,7 +219,10 @@ class CodeBlock extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '✓ Successfully added boilerplate codes for layout!',
-                style: TextStyle(color: Colors.green.shade400),
+                style: TextStyle(
+                  color: Colors.green.shade400,
+                  fontSize: isWideScreen ? null : 10,
+                ),
               ),
             ],
           ),
@@ -304,7 +318,10 @@ class CodeBlock extends StatelessWidget {
               const SizedBox(width: 18),
               Text(
                 'Connect to Firebase: https://console.firebase.google.com',
-                style: TextStyle(color: Colors.green.shade400),
+                style: TextStyle(
+                  color: Colors.green.shade400,
+                  fontSize: isWideScreen ? null : 10.9,
+                ),
               ),
             ],
           ),

@@ -7,11 +7,19 @@ import 'package:f3_docs/features/docs/widgets/sub_heading.dart';
 import 'package:f3_docs/features/docs/widgets/title.dart';
 import 'package:flutter/material.dart';
 
-class DependencyPage extends StatelessWidget {
+class DependencyPage extends StatefulWidget {
   const DependencyPage({super.key});
 
   @override
+  State<DependencyPage> createState() => _DependencyPageState();
+}
+
+class _DependencyPageState extends State<DependencyPage> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,28 +104,71 @@ class DependencyPage extends StatelessWidget {
           const DocParagraph(
             'Now that you understand dependency overrides in F3 Stack, you can explore:',
           ),
-          Row(
-            children: [
-              DocLink('Testing', '/docs/testing'),
-              const Text(' - Learn how to test your F3 Stack application'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              DocLink('Deployment', '/docs/deployment'),
-              const Text(' - Explore how to deploy your F3 Stack application'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              DocLink('CLI', '/docs/overview'),
-              const Text(
-                ' - Learn more about the F3 CLI and how it manages dependencies',
+          isWideScreen
+              ? Column(
+                children: [
+                  Row(
+                    children: [
+                      DocLink('Testing', '/docs/testing'),
+                      const Text(
+                        ' - Learn how to test your F3 Stack application',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    children: [
+                      DocLink('Deployment', '/docs/deployment'),
+                      const Text(
+                        ' - Explore how to deploy your F3 Stack application',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('CLI', '/docs/overview'),
+                      const Text(
+                        ' - Learn more about the F3 CLI and how it manages dependencies',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+                ],
+              )
+              : Column(
+                children: [
+                  Row(
+                    children: [
+                      DocLink('Testing', '/docs/testing'),
+                      const Text(
+                        ' - Learn how to test your F3 Stack application',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Deployment', '/docs/deployment'),
+                      const Text(
+                        ' - Explore how to deploy your F3 Stack application',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('CLI', '/docs/overview'),
+                      const Text(
+                        ' - Learn more about the F3 CLI and how it manages dependencies',
+                        style: TextStyle(fontSize: 10.5),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
           const SizedBox(height: 16),
         ],
       ),

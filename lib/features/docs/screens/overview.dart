@@ -6,11 +6,19 @@ import 'package:f3_docs/features/docs/widgets/paragraph.dart';
 import 'package:f3_docs/features/docs/widgets/title.dart';
 import 'package:flutter/material.dart';
 
-class OverviewPage extends StatelessWidget {
+class OverviewPage extends StatefulWidget {
   const OverviewPage({super.key});
 
   @override
+  State<OverviewPage> createState() => _OverviewPageState();
+}
+
+class _OverviewPageState extends State<OverviewPage> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,28 +128,70 @@ class OverviewPage extends StatelessWidget {
           const DocParagraph(
             'Now that you understand the F3 CLI, you can explore:',
           ),
-          Row(
-            children: [
-              DocLink('Dependency Overrides', '/docs/dependency'),
-              const Text(
-                ' - Learn about the dependency overrides used in F3 Stack',
+          isWideScreen
+              ? Column(
+                children: [
+                  Row(
+                    children: [
+                      DocLink('Dependency Overrides', '/docs/dependency'),
+                      const Text(
+                        ' - Learn about the dependency overrides used in F3 Stack',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Testing', '/docs/testing'),
+                      const Text(
+                        ' - Learn how to test your F3 Stack application',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Deployment', '/docs/deployment'),
+                      const Text(
+                        ' - Explore how to deploy your F3 Stack application',
+                      ),
+                    ],
+                  ),
+                ],
+              )
+              : Column(
+                children: [
+                  Row(
+                    children: [
+                      DocLink('Dependency Overrides', '/docs/dependency'),
+                      const Text(
+                        ' - Learn about the dependency overrides used in F3 Stack',
+                        style: TextStyle(fontSize: 8),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Testing', '/docs/testing'),
+                      const Text(
+                        ' - Learn how to test your F3 Stack application',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      DocLink('Deployment', '/docs/deployment'),
+                      const Text(
+                        ' - Explore how to deploy your F3 Stack application',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              DocLink('Testing', '/docs/testing'),
-              const Text(' - Learn how to test your F3 Stack application'),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              DocLink('Deployment', '/docs/deployment'),
-              const Text(' - Explore how to deploy your F3 Stack application'),
-            ],
-          ),
           const SizedBox(height: 16),
         ],
       ),

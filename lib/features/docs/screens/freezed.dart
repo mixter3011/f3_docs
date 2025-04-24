@@ -7,11 +7,19 @@ import 'package:f3_docs/features/docs/widgets/sub_heading.dart';
 import 'package:f3_docs/features/docs/widgets/title.dart';
 import 'package:flutter/material.dart';
 
-class FreezedPage extends StatelessWidget {
+class FreezedPage extends StatefulWidget {
   const FreezedPage({super.key});
 
   @override
+  State<FreezedPage> createState() => _FreezedPageState();
+}
+
+class _FreezedPageState extends State<FreezedPage> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -160,13 +168,25 @@ dependency_overrides:
         ]),
 
         const DocHeading('Next Steps'),
-        Row(
-          children: [
-            const DocParagraph('Check out the '),
-            DocLink('Dependency Overrides', '/dependency'),
-            const DocParagraph(' guide to learn about the advanced stuff.'),
-          ],
-        ),
+        isWideScreen
+            ? Row(
+              children: [
+                const DocParagraph('Check out the '),
+                DocLink('Dependency Overrides', '/dependency'),
+                const DocParagraph(' guide to learn about the advanced stuff.'),
+              ],
+            )
+            : Row(
+              children: [
+                const Text('Check out the ', style: TextStyle(fontSize: 11)),
+                DocLink('Dependency Overrides', '/dependency'),
+                const Text(
+                  ' guide to learn about the',
+                  style: TextStyle(fontSize: 11),
+                ),
+                const Text(' advanced stuff', style: TextStyle(fontSize: 11)),
+              ],
+            ),
       ],
     );
   }

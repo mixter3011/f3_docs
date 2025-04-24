@@ -30,9 +30,9 @@ class SiteHeader extends StatefulWidget {
 class _SiteHeaderState extends State<SiteHeader> {
   bool isMenuOpen = false;
 
-  void toggleMenu() {
+  void toggleMenu({bool close = false}) {
     setState(() {
-      isMenuOpen = !isMenuOpen;
+      isMenuOpen = close ? false : !isMenuOpen;
     });
   }
 
@@ -80,11 +80,13 @@ class _SiteHeaderState extends State<SiteHeader> {
                                     (item) => Padding(
                                       padding: const EdgeInsets.only(right: 24),
                                       child: InkWell(
-                                        onTap:
-                                            () => Navigator.pushNamed(
-                                              context,
-                                              item['route']!,
-                                            ),
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            item['route']!,
+                                          );
+                                          toggleMenu(close: true);
+                                        },
                                         child: Text(
                                           item['name']!,
                                           style:
@@ -111,9 +113,11 @@ class _SiteHeaderState extends State<SiteHeader> {
                               clipper: Clipper(),
                               child: Container(
                                 height: 36,
-                                padding: const EdgeInsets.only(
-                                  left: 8,
-                                  right: 20,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                      MediaQuery.of(context).size.width > 400
+                                          ? 12
+                                          : 8,
                                 ),
                                 decoration: BoxDecoration(
                                   color: Colors.grey.withOpacity(0.1),

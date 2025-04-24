@@ -7,11 +7,18 @@ import 'package:f3_docs/features/docs/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-class IntroductionPage extends StatelessWidget {
+class IntroductionPage extends StatefulWidget {
   const IntroductionPage({super.key});
 
   @override
+  State<IntroductionPage> createState() => _IntroductionPageState();
+}
+
+class _IntroductionPageState extends State<IntroductionPage> {
+  @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isWideScreen = screenWidth >= 768;
     return Stack(
       children: [
         Column(
@@ -77,17 +84,37 @@ class IntroductionPage extends StatelessWidget {
             ),
 
             const DocHeading('Getting Started'),
-            Row(
-              children: [
-                const DocParagraph(
-                  'Ready to start building with F3 Stack? Check out the ',
+            isWideScreen
+                ? Row(
+                  children: [
+                    const DocParagraph(
+                      'Ready to start building with F3 Stack? Check out the ',
+                    ),
+                    DocLink('Installation', '/installation'),
+                    const DocParagraph(
+                      ' guide to set up your development environment.',
+                    ),
+                  ],
+                )
+                : Column(
+                  children: [
+                    const Text('Ready to start building with F3 Stack? '),
+                    const SizedBox(height: 3),
+                    Row(
+                      children: [
+                        const Text(
+                          'Check out the ',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        DocLink('Installation', '/installation'),
+                        const Text(
+                          ' guide to set up your development environment.',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                DocLink('Installation', '/installation'),
-                const DocParagraph(
-                  ' guide to set up your development environment.',
-                ),
-              ],
-            ),
           ],
         ),
       ],
